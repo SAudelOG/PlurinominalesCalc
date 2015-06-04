@@ -15,9 +15,80 @@
 <div id="partidos">
 	
 </div>
-{{#section 'jquery'}}
-	<script>
+ <div id="example"></div>
+{{#section 'React'}}
+	<script type="text/jsx">
+
 	'use strict';
+	//contenedor de los partidos
+	var PartiesBox = React.createClass({
+		render: function() {
+			return(
+				<div className= "partyBox">
+					<h1>Partidos</h1>
+					<PartyList />
+					<PartyForm />
+				</div>
+			);
+		}
+	});
+
+	var PartyList = React.createClass({
+		render: function(){
+			return(
+				<div className="partyList">
+					<Party partyName="PRI">
+						Partio Revolucionario Institucioanl
+						<span>
+							<Votos />
+						</span>
+					</Party>
+					<Party partyName="PAN"></Party>
+				</div>
+			);
+		}
+	});
+
+	var Party = React.createClass({
+		render: function(){
+			return(
+				<div className="party">
+					<h2 className="partyName">
+						{this.props.partyName}
+					</h2>
+					{this.props.children}
+				</div>
+			);
+		}
+	});
+
+	var Votos = React.createClass({
+		render: function(){
+			return(
+				<div className="votos">
+					votos
+				</div>
+			);
+		}
+	});
+
+	var PartyForm = React.createClass({
+		render: function(){
+			return(
+				<div className="addonsPartido">
+					Aqui esta el formulario del partido
+				</div>
+			);
+		}
+	});
+
+
+	//render de todos los elementos
+	React.render(
+		<PartiesBox />,
+		document.getElementById('partidos')
+	);
+
 		$('#btnNpartidos').on('click', function(){
 			var Npartidos = parseInt($('#Npartidos').val());
 			if (!Npartidos) console.log('Selecciona un numero');
@@ -26,7 +97,11 @@
 				success: function(data){
 					var partidos = data;
 					for (var i = 0; i < partidos.length; i ++){
-						$('#partidos').append('<label data-partido="'+partidos[i].Prefijo+'">' + partidos[i].Nombre + '</label><br>')
+						$('#partidos').append('<label data-partido="'+partidos[i].Prefijo+'">' + partidos[i].Nombre + '</label><br>');
+						React.render(
+        					<h1>partidos</h1>,
+        					document.getElementById('example')
+      					);
 					}
 				}
 			})
