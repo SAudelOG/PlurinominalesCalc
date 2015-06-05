@@ -1,0 +1,35 @@
+<select name="Npartidos" id="Npartidos">
+	<option value="">Numero de partidos</option>
+	<option value="1">1</option>
+	<option value="2">2</option>
+	<option value="3">3</option>
+	<option value="4">4</option>
+	<option value="5">5</option>
+	<option value="6">6</option>
+	<option value="7">7</option>
+	<option value="8">8</option>
+	<option value="9">9</option>
+	<option value="10">10</option>
+</select>
+<button id="btnNpartidos">Click</button>
+<div id="partidos">
+	
+</div>
+{{#section 'jquery'}}
+	<script>
+	'use strict';
+		$('#btnNpartidos').on('click', function(){
+			var Npartidos = parseInt($('#Npartidos').val());
+			if (!Npartidos) console.log('Selecciona un numero');
+			else
+			$.ajax('/obtenerPartidos',{
+				success: function(data){
+					var partidos = data;
+					for (var i = 0; i < partidos.length; i ++){
+						$('#partidos').append('<label data-partido="'+partidos[i].Prefijo+'">' + partidos[i].Nombre + '</label><br>')
+					}
+				}
+			})
+		})
+	</script>
+{{/section}}
