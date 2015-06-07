@@ -30,7 +30,7 @@ app.get('/', function(req, res){
 app.get('/obtenerPartidos', function(req, res){
 	if(req.xhr || req.accepts('json.html') === 'json'){
 		res.json(partidos.obtenerPartidos());
-	}else res.redirect('/');
+	}else res.json(partidos.obtenerPartidos());;
 });
 
 app.listen(app.get('port'), function(){

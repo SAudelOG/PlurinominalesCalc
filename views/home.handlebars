@@ -20,63 +20,70 @@
 	<script type="text/jsx">
 
 	'use strict';
-	//contenedor de los partidos
-	var PartiesBox = React.createClass({
-		render: function() {
-			return(
-				<div className= "partyBox">
-					<h1>Partidos</h1>
-					<PartyList />
-					<PartyForm />
-				</div>
-			);
-		}
-	});
 
-	var PartyList = React.createClass({
-		render: function(){
+	var partidos = [
+	{
+		"idPartido":1,
+		"Nombre":"Partido Revolucionario Institucional",
+		"Prefijo": "PRI",
+		"PaginaWeb": "http://pri.org.mx",
+		"Urllogo":"http://upload.wikimedia.org/wikipedia/commons/5/5f/PRI_Party_%28Mexico%29.svg",
+	},
+	{
+		"idPartido":2,
+		"Nombre":"Partido Acción Nacional",
+		"Prefijo": "PAN",
+		"PaginaWeb": "http://pan.org.mx/",
+		"Urllogo":"http://upload.wikimedia.org/wikipedia/commons/1/14/PAN_%28Mexico%29.svg",
+	}];
+	//contenedor de los partidos
+	var PartieBox = React.createClass({
+		getInitialState: function() {
+    		return {partidos: []};
+  		},
+		render: function() {
+			var partiNodes = this.props.partidos.map(function(partido){
+				return(
+					<div className= "partyBox">
+						<PartyName party={partido.Nombre}/>
+						<PartyPrefix prefijo={partido.Prefijo}/>
+						<PartyVotos />
+					</div>
+				);
+			});
 			return(
 				<div className="partyList">
-					<Party partyName="PRI">
-						Partio Revolucionario Institucioanl
-						<span>
-							<Votos />
-						</span>
-					</Party>
-					<Party partyName="PAN"></Party>
+					{partiNodes}
 				</div>
 			);
 		}
 	});
 
-	var Party = React.createClass({
+	var PartyName = React.createClass({
 		render: function(){
 			return(
-				<div className="party">
-					<h2 className="partyName">
-						{this.props.partyName}
-					</h2>
-					{this.props.children}
+				<div className="partyName">
+					{this.props.party}
 				</div>
 			);
 		}
 	});
 
-	var Votos = React.createClass({
+	var PartyPrefix = React.createClass({
 		render: function(){
 			return(
-				<div className="votos">
-					votos
+				<div className="partyPrefix">
+					{this.props.prefijo}
 				</div>
 			);
 		}
 	});
 
-	var PartyForm = React.createClass({
+	var PartyVotos = React.createClass({
 		render: function(){
 			return(
-				<div className="addonsPartido">
-					Aqui esta el formulario del partido
+				<div className="partyVotos">
+				32423432432
 				</div>
 			);
 		}
@@ -85,7 +92,7 @@
 
 	//render de todos los elementos
 	React.render(
-		<PartiesBox />,
+		<PartieBox partidos = {partidos}/>,
 		document.getElementById('partidos')
 	);
 
